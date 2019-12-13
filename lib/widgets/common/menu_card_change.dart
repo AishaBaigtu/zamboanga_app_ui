@@ -31,16 +31,29 @@ class ChangeMenuCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final double screensize = MediaQuery.of(context).size.height;
     final double cardHeight = MediaQuery.of(context).size.height / 5;
-    final double cardWidth = MediaQuery.of(context).size.width / 1.1;
+    final double cardWidth = MediaQuery.of(context).size.width / 1.05;
 
 
-    if (change == ChangeMenuCardFlag.citizen_report) {
+    _changeMenu(){
+      if (change == ChangeMenuCardFlag.home_page){
+        return HomePageMenuCard();
+      }
+      else if (change == ChangeMenuCardFlag.citizen_report){
+        return CitizenReportMenuCard();
+      }
+      else if (change == ChangeMenuCardFlag.peso_job_listing){
+        return PJLMenuCard();
+      }
+      else {
+        return PlacesMenuCard();
+      }
+    }
+
       return Center(
         child: Padding(
           padding: EdgeInsets.only(
-            top: 100,
+            top: ((MediaQuery.of(context).size.height/3)/5)*4,
           ),
           child: SizedBox(
             width: cardWidth,
@@ -52,82 +65,12 @@ class ChangeMenuCard extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-                child: CitizenReportMenuCard(),
+                child: _changeMenu(),
               ),
             ),
           ),
         ),
       );
-    }
-    else if (change == ChangeMenuCardFlag.home_page){
-      return Center(
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: 100,
-          ),
-          child: SizedBox(
-            width: cardWidth,
-            height: cardHeight,
-            child: Card(
-              elevation: 1.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-                child: HomePageMenuCard(),
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-    else if (change == ChangeMenuCardFlag.peso_job_listing){
-      return Center(
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: 100,
-          ),
-          child: SizedBox(
-            width: cardWidth,
-            height: cardHeight,
-            child: Card(
-              elevation: 1.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-                child: PJLMenuCard(),
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-    else if (change == ChangeMenuCardFlag.places){
-      return Center(
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: 100,
-          ),
-          child: SizedBox(
-            width: cardWidth,
-            height: cardHeight,
-            child: Card(
-              elevation: 1.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-                child: PlacesMenuCard(),
-              ),
-            ),
-          ),
-        ),
-      );
-    }
 
   }
 }
@@ -214,13 +157,9 @@ class HomePageMenuCard extends StatelessWidget {
 
 class CitizenReportMenuCard extends StatelessWidget {
 
-
-
-
   @override
   Widget build(BuildContext context) {
 
-    final double screensize=MediaQuery.of(context).size.height;
     final double cardHeight=MediaQuery.of(context).size.height/5;
     final double cardWidth=MediaQuery.of(context).size.width/1.1;
 

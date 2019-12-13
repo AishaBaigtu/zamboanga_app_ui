@@ -7,7 +7,7 @@ import 'package:zamboanga_app_ui/pages/citizen_report.dart';
 import 'package:zamboanga_app_ui/pages/government_directory.dart';
 import 'package:zamboanga_app_ui/pages/places.dart';
 import 'package:zamboanga_app_ui/widgets/home_page/news_more.dart';
-import 'package:zamboanga_app_ui/widgets/common/change_menu_card.dart';
+import 'package:zamboanga_app_ui/widgets/common/menu_card_change.dart';
 import 'package:zamboanga_app_ui/widgets/common/feed_card_change.dart';
 import 'package:zamboanga_app_ui/widgets/government_directory/office_page.dart';
 import 'package:zamboanga_app_ui/widgets/peso_job_listing/job_openings.dart';
@@ -15,7 +15,6 @@ import 'package:zamboanga_app_ui/widgets/peso_job_listing/job_page.dart';
 import 'package:zamboanga_app_ui/widgets/peso_job_listing/saved_jobs.dart';
 
 class HomePage extends StatelessWidget {
-
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +35,7 @@ class HomePage extends StatelessWidget {
         "/job_openings": (BuildContext context) => JobOpenings(),
         "/saved_jobs": (BuildContext context) => SavedJobs(),
       },
+
 
       debugShowCheckedModeBanner: false,
       home: Home(

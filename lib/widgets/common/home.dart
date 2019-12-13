@@ -50,9 +50,6 @@ class _HomeState extends State<Home> {
 
   }
 
-
-
-
   Widget build(BuildContext context) {
     return Scaffold(
       drawerEdgeDragWidth: 0,
@@ -67,7 +64,60 @@ class _HomeState extends State<Home> {
 
       ),
 
-      drawer: Visibility(visible: true, child: Drawer()),
+      drawer: Visibility(
+          visible: true,
+          child: Drawer(
+            child: Column(
+              children: <Widget>[
+                UserAccountsDrawerHeader(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [Colors.blue, Colors.purpleAccent]
+                    ),
+                  ),
+                  accountName: Text(''),
+                  accountEmail: Text(''),
+                  currentAccountPicture: CircleAvatar(
+                    backgroundImage: NetworkImage(''),
+                  ),
+                ),
+                Expanded(
+                  child: MediaQuery.removePadding(
+                    removeTop: true,
+                    context: context,
+                    child: ListView(
+                      children: <Widget>[
+
+                        ListTile(
+                            leading: Icon(Icons.folder),
+                            title: Text("Terms and Conditions"),
+                            onTap: () {
+
+                            }
+                        ),
+                        ListTile(
+                            leading: Icon(Icons.info_outline),
+                            title: Text("About"),
+                            onTap: () {
+
+                            }
+                        ),
+                        ListTile(
+                            leading: Icon(Icons.exit_to_app),
+                            title: Text("Logout"),
+                            onTap: () {
+
+                            }
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            )
+          )
+      ),
+
       body: Stack(
         children: <Widget>[
           ListView(
@@ -107,18 +157,14 @@ class _HomeState extends State<Home> {
                     ),
                   ),
 
-
-                  Padding(
-                    padding: const EdgeInsets.only(top:120.0),
-                    child: widget.menuCardType,
-                  ),
+                  widget.menuCardType,
 
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 15.0, bottom: 20.0),
+                padding: EdgeInsets.only(top: 15.0, bottom: 20.0),
                 child: Text(
-                  widget.feedTitle, textAlign: TextAlign.center, style: Theme
+                  widget.feedTitle.toUpperCase(), textAlign: TextAlign.center, style: Theme
                     .of(context)
                     .textTheme
                     .button,),

@@ -1,70 +1,181 @@
-import 'dart:io';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:zamboanga_app_ui/widgets/citizen_report/report_page.dart';
+import 'package:flutter/rendering.dart';
 import 'package:zamboanga_app_ui/widgets/citizen_report/report_more.dart';
-import 'package:zamboanga_app_ui/widgets/home_page/news_more.dart';
-
-
-
 
 class ReportFeed extends StatelessWidget {
 
+  ReportFeed({this.image, this.type, this.date, this.time, this.details, this.location,});
 
-  int reportIndex;
-  List<File> image;
+  List<String> image;
   List<String> type;
-  List<DateTime> date;
+  List<String> date;
   List<String> details;
   List<String> time;
   List<String> location;
 
-
-
   @override
 
   Widget build(BuildContext context) {
-    if (reportIndex==null){
+
+    double height= MediaQuery.of(context).size.height/4;
+    double division=9;
+
+    if (type.length==0){
       return Container();
-    } else {
+    } else { return ListView.builder(
+        shrinkWrap: true,
+        physics: ScrollPhysics(),
+        itemCount: type.length,
+        itemBuilder: (BuildContext context, index)
+        {
+          return Card(
+            elevation: 0,
+            child: Padding(
+              padding: EdgeInsets.only(top:20.0, left: 20.0, right: 20.0),
+              child: Wrap(
+                direction: Axis.vertical,
+                spacing: 10,
+                children: <Widget>[
+                  Wrap(
+                    direction: Axis.horizontal,
+                    spacing: 10,
+                    runSpacing: 10,
+                    children: <Widget>[
+                      Wrap(
+                        direction: Axis.vertical,
+                        children: <Widget>[
+                          Container(
+                              width: MediaQuery.of(context).size.width/1.3,
+                              child: AutoSizeText(type[index].toUpperCase(), style: TextStyle(fontSize: 20.0,),)),
+
+                          Wrap(
+                            direction: Axis.horizontal,
+                            children: <Widget>[
+                              Text(date[index]),
+                              Text(" "),
+                              Text(time[index]),
+                            ],
+                          ),
+
+                        ],
+                      ),
+
+                    ],
+                  ),
+
+                  Container(
+                    width: MediaQuery.of(context).size.width/1.18,
+                    child: AutoSizeText(
+                      details[index],
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 15.0),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width-80),
+                    child: IconButton(icon: Icon(Icons.arrow_forward_ios, size: 18),
+                        onPressed: (){
+
+                        }
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+
+        },
+      );
+    }
+  }
+}
+
+class NewsFeed extends StatelessWidget {
+
+  NewsFeed({this.profilepic, this.headline, this.date, this.time, this.body, this.location,});
+
+
+  List<String> profilepic;
+  List<String> headline;
+  List<String> date;
+  List<String> body;
+  List<String> time;
+  List<String> location;
+
+  @override
+  Widget build(BuildContext context) {
+
+
+    if(headline.length==0){
+      return Container();
+    }else {
       return ListView.builder(
         shrinkWrap: true,
         physics: ScrollPhysics(),
-        itemCount: reportIndex,
-        itemBuilder: (BuildContext context, reportIndex)
-        {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 5.0),
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height/3.8,
-              child: Card(
-                elevation: 0.0,
-                child: Padding(
-                  padding: const EdgeInsets.only(top:10.0, left: 10.0, right: 10.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
+        itemCount: headline.length,
+        itemBuilder: (BuildContext context, index) {
+
+          return Card(
+            elevation: 0,
+            child: Padding(
+              padding: EdgeInsets.only(top:20.0, left: 20.0, right: 20.0),
+              child: Wrap(
+                direction: Axis.vertical,
+                spacing: 10,
+                children: <Widget>[
+                  Wrap(
+                    direction: Axis.horizontal,
+                    spacing: 10,
+                    runSpacing: 10,
                     children: <Widget>[
-                      ListTile(
-                        title: Text(type[reportIndex]),
-                        subtitle: AutoSizeText("Sent on ${date[reportIndex]} ${time[reportIndex]}. Reported location: ${location[reportIndex]})",
-                          maxLines: 2, ),
+                      CircleAvatar(
+                        child: ClipOval(child: Image.network(
+                          profilepic[index], fit: BoxFit.cover,)
+                        )
                       ),
-                      Expanded(child: AutoSizeText(details[reportIndex], maxLines: 4, minFontSize:13, overflow: TextOverflow.ellipsis,)),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                      Wrap(
+                        direction: Axis.vertical,
                         children: <Widget>[
-                          IconButton(icon: Icon(Icons.arrow_forward_ios),
-                              onPressed: (){
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      ReportMore(
-                                      ),
-                                ),);}),
-                        ],
-                      )
+                        Container(
+                          width: MediaQuery.of(context).size.width/1.3,
+                            child: AutoSizeText(headline[index].toUpperCase(), style: TextStyle(fontSize: 20.0,),)),
+
+                        Wrap(
+                          direction: Axis.horizontal,
+                          children: <Widget>[
+                            Text(date[index]),
+                            Text(" "),
+                            Text(time[index]),
+                          ],
+                        ),
+
+                      ],
+                      ),
+
                     ],
                   ),
-                ),
+
+                  Container(
+                    width: MediaQuery.of(context).size.width/1.18,
+                    child: AutoSizeText(
+                      body[index],
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 15.0),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width-80),
+                    child: IconButton(icon: Icon(Icons.arrow_forward_ios, size: 18),
+                        onPressed: (){
+
+                        }
+                    ),
+                  )
+                ],
               ),
             ),
           );
@@ -74,84 +185,176 @@ class ReportFeed extends StatelessWidget {
   }
 }
 
-class NewsFeed extends StatelessWidget {
+class JobFeed extends StatelessWidget {
 
-  NewsFeed({this.profilepic, this.headline, this.date, this.time, this.body, this.location});
+  JobFeed({this.jobTitle, this.companyName, this.date, this.time, this.details,});
 
 
-  List<String> profilepic;
-  List<String> headline;
+  List<String> jobTitle;
+  List<String> companyName;
   List<String> date;
-  List<String> body;
   List<String> time;
-  List<String> location;
+  List<String> details;
+
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: ScrollPhysics(),
-      itemCount: headline.length,
-      itemBuilder: (BuildContext context, index)
-      {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 5.0),
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height/3.8,
-            child: Card(
-              elevation: 0.0,
-              child: Padding(
-                padding: const EdgeInsets.only(top:10.0, left: 10.0, right: 10.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    ListTile(
-                      leading: CircleAvatar(
-                          child: ClipOval(child: Image.network(profilepic[index], fit: BoxFit.cover,)
-                          )
+
+    double height= MediaQuery.of(context).size.height/4;
+    double division=9;
+
+    if(jobTitle.length==0){
+      return Container();
+    }else {
+      return ListView.builder(
+        shrinkWrap: true,
+        physics: ScrollPhysics(),
+        itemCount: jobTitle.length,
+        itemBuilder: (BuildContext context, index) {
+          return Card(
+            elevation: 0,
+            child: Padding(
+              padding: EdgeInsets.only(top:20.0, left: 20.0, right: 20.0),
+              child: Wrap(
+                direction: Axis.vertical,
+                spacing: 10,
+                children: <Widget>[
+                  Wrap(
+                    direction: Axis.horizontal,
+                    spacing: 10,
+                    runSpacing: 10,
+                    children: <Widget>[
+                      Wrap(
+                        direction: Axis.vertical,
+                        children: <Widget>[
+                          Container(
+                              width: MediaQuery.of(context).size.width/1.3,
+                              child: AutoSizeText(jobTitle[index].toUpperCase(), style: TextStyle(fontSize: 20.0,),)),
+                          Container(
+                              width: MediaQuery.of(context).size.width/1.3,
+                              child: AutoSizeText(companyName[index], style: TextStyle(fontSize: 15.0,),)),
+                          Wrap(
+                            direction: Axis.horizontal,
+                            children: <Widget>[
+                              Text(date[index]),
+                              Text(" "),
+                              Text(time[index]),
+                            ],
+                          ),
+
+                        ],
                       ),
-                      title: Text(headline[index]),
-                      subtitle: Row(children: <Widget>[ Text(date[index]),Text(" "), Text(time[index])],),
+
+                    ],
+                  ),
+
+                  Container(
+                    width: MediaQuery.of(context).size.width/1.18,
+                    child: AutoSizeText(
+                      details[index],
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 15.0),
                     ),
-                    Expanded(child: AutoSizeText(body[index], maxLines: 3, minFontSize:13, maxFontSize: 15, overflow: TextOverflow.ellipsis,)),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        IconButton(icon: Icon(Icons.arrow_forward_ios),
-                            onPressed: (){
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    NewsMore(newsIndex: index,),
-                              ),);
-                            }
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width-80),
+                    child: IconButton(icon: Icon(Icons.arrow_forward_ios, size: 18),
+                        onPressed: (){
+
+                        }
+                    ),
+                  )
+                ],
               ),
             ),
-          ),
-        );
-      },
-    );
-  }
-}
+          );
 
-class JobFeed extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-
-    );
+        },
+      );
+    }
   }
 }
 
 class PlaceFeed extends StatelessWidget {
+  PlaceFeed({this.placeName, this.location, this.details,});
+
+
+  List<String> placeName;
+  List<String> location;
+  List<String> details;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
 
-    );
+    double height= MediaQuery.of(context).size.height/4;
+    double division=9;
+
+    if(placeName.length==0){
+      return Container();
+    }else {
+      return ListView.builder(
+        shrinkWrap: true,
+        physics: ScrollPhysics(),
+        itemCount:placeName.length,
+        itemBuilder: (BuildContext context, index) {
+          return Card(
+            elevation: 0,
+            child: Padding(
+              padding: EdgeInsets.only(top:20.0, left: 20.0, right: 20.0),
+              child: Wrap(
+                direction: Axis.vertical,
+                spacing: 10,
+                children: <Widget>[
+                  Wrap(
+                    direction: Axis.horizontal,
+                    spacing: 10,
+                    runSpacing: 10,
+                    children: <Widget>[
+                      Wrap(
+                        direction: Axis.vertical,
+                        children: <Widget>[
+                          Container(
+                              width: MediaQuery.of(context).size.width/1.3,
+                              child: AutoSizeText(placeName[index].toUpperCase(), style: TextStyle(fontSize: 20.0,),)),
+                          Wrap(
+                            direction: Axis.horizontal,
+                            children: <Widget>[
+                              Icon(Icons.location_on, size: 15,),
+                              Text(" "),
+                              Text(location[index]),
+                            ],
+                          ),
+
+                        ],
+                      ),
+
+                    ],
+                  ),
+
+                  Container(
+                    width: MediaQuery.of(context).size.width/1.18,
+                    child: AutoSizeText(
+                      details[index],
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 15.0),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width-80),
+                    child: IconButton(icon: Icon(Icons.arrow_forward_ios, size: 18),
+                        onPressed: (){
+
+                        }
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    }
   }
 }
 

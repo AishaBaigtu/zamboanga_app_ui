@@ -3,30 +3,22 @@ import 'package:flutter/widgets.dart';
 
 class OfficePage extends StatefulWidget {
 
-  OfficePage({Key key, @required this.office, @required this.seal, this.aboutOffice, this.officeService, this.officeSeal,}) : super(key: key);
+  OfficePage({Key key,this.officeName, this.address, this.contactNumber, this.officeSeal, this.route,this.officeIndex, this.serviceName, this.serviceAbout}) : super(key: key);
 
-  final String office;
-  final String seal;
-  final String aboutOffice;
-  final String officeService;
-  final String officeSeal;
-
+  final List<String> officeName;
+  final List<String> address;
+  final List<String> contactNumber;
+  final List<String> officeSeal;
+  final List<String> route;
+  final List<String> serviceName;
+  final List<String> serviceAbout;
+  final int officeIndex;
 
   @override
   _OfficePageState createState() => _OfficePageState();
 }
 
 class _OfficePageState extends State<OfficePage> {
-
-  _OfficePageState(
-      { @required this.office, this.aboutOffice, this.officeService, this.officeSeal, this.serviceName, this.aboutService});
-
-  String office;
-  String aboutOffice;
-  String officeService;
-  String officeSeal;
-  String serviceName;
-  String aboutService;
 
 
   ScrollController _scrollController = ScrollController();
@@ -69,7 +61,7 @@ class _OfficePageState extends State<OfficePage> {
       backgroundColor: Colors.indigo[50],
 
       appBar: AppBar(
-        title: Text("${widget.office}"),
+        title: Text("${widget.officeName[widget.officeIndex]}"),
         centerTitle: true,
         backgroundColor: Colors.purple,
       ),
@@ -83,16 +75,17 @@ class _OfficePageState extends State<OfficePage> {
                 children: <Widget>[
                   SafeArea(
                     child: Container(
-                      height: 250,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [Colors.blueAccent, Colors.purple]
-                        )
-                      ),
+                        height: 250,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [Colors.blueAccent, Colors.purple]
+                            )
+                        ),
                         child: Center(
-                            child: Image(height:220,image: AssetImage(widget.seal)))),
+                            child: Image(height: 220, image: AssetImage(widget
+                                .officeSeal[widget.officeIndex])))),
                   ),
 
 
@@ -127,7 +120,6 @@ class _OfficePageState extends State<OfficePage> {
                                             child: Column(
 
                                               children: <Widget>[
-                                                _getAboutOffice(),
                                               ],
                                             ),
                                           ),
@@ -155,7 +147,33 @@ class _OfficePageState extends State<OfficePage> {
                     .textTheme
                     .button,),
               ),
-             _getServices(),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: ScrollPhysics(),
+                itemCount: widget.serviceName.length,
+                itemBuilder: (BuildContext context, index) {
+                  return Card(
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0),
+                    ),
+
+                    child: ExpansionTile(
+                      title: Text(
+                        widget.serviceName[index],
+                        style: TextStyle(color: Colors.black),),
+                      children: <Widget>[
+                        Divider(),
+
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(widget.serviceAbout[index]),
+                        ),
+
+                      ],
+                    ),
+                  );
+                },
+              ),
             ],
           ),
 
@@ -172,95 +190,5 @@ class _OfficePageState extends State<OfficePage> {
       ),
     );
   }
-
-
-  Widget _getAboutOffice() {
-    if (widget.office == "Office of the City Mayor")
-      return Text("The Government of Zamboanga City, also known as the Zamboanga City Government is the local government unit in-charge of the City of Zamboanga. The current executive branch is headed by Mayor Maria Isabelle Climaco-Salazar.");
-    else if (widget.office == "Sangguniang Panglungsod")
-      return Text("The Sangguniang Panlungsod is mandated under R.A. 7160 to enact ordinances and approve resolutions for the general welfare of the city and its constituents.");
-    else
-      return Text("");
-  }
-
-  Widget _getServices() {
-    if (widget.office == "Office of the City Mayor")
-      return GetServices(
-        serviceName: [
-          "Medical Assistance",
-          "Burial Assistance",
-          "Scholarship",
-        ],
-        aboutService: [
-          "",
-          "",
-          "",
-        ],
-      );
-    else if (widget.office == "Sangguniang Panglungsod")
-      return GetServices(
-        serviceName: [
-          "",
-          "",
-          "",
-        ],
-        aboutService: [
-          "",
-          "",
-          "",
-        ],
-      );
-    else
-      return GetServices(
-        serviceName: [
-          "",
-          "",
-          "",
-        ],
-        aboutService: [
-          "",
-          "",
-          "",
-        ],
-      );
-  }
-
 }
 
-
-class GetServices extends StatelessWidget {
-
-  GetServices({this.serviceName, this.aboutService});
-
-  final List<String> serviceName;
-  final List<String> aboutService;
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: ScrollPhysics(),
-      itemCount: serviceName.length,
-      itemBuilder: (BuildContext context, index) {
-        return Card(
-          shape: new RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(0),
-          ),
-
-          child: ExpansionTile(
-            title: Text(
-              serviceName[index], style: TextStyle(color: Colors.black),),
-            children: <Widget>[
-              Divider(),
-
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(aboutService[index]),
-              ),
-
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
