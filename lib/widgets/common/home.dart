@@ -150,8 +150,8 @@ class _HomeState extends State<Home> {
                               .size
                               .height / 3,
                           width: double.infinity,
-                          fit: BoxFit.cover,
-                          alignment: Alignment.bottomRight,
+                          fit: BoxFit.fill,
+                          alignment: Alignment.topLeft,
                         ),
                       ),
                     ),

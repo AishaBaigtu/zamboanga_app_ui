@@ -1,69 +1,107 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'restaurants_list.dart';
+
+
+
+class Place {
+  String placeName;
+  String location;
+  String details;
+  bool halal;
+  String image;
+
+  Place({this.placeName, this.location, this.details, this.halal, this.image});
+
+  static List<Place> allPlaces() {
+    var listOfPlaces = List<Place>();
+
+    listOfPlaces.add(Place(
+        placeName: "dd", location: "aa", details: "aa", halal: true, image: "aa"));
+    listOfPlaces.add(Place(
+        placeName: "aaa", location: "aa", details: "aa", halal: true, image: "aa"));
+
+    return listOfPlaces;
+  }
+
+
+}
+class SavedPlace{
+  String placeName;
+  String location;
+  String details;
+  bool halal;
+  String image;
+
+  SavedPlace({this.placeName, this.location, this.details, this.halal, this.image});
+
+  static List<SavedPlace> allSavedPlaces() {
+    var listOfSavedPlaces = List<SavedPlace>();
+
+
+    return listOfSavedPlaces;
+  }
+
+
+
+}
 
 class PlacePage extends StatefulWidget {
-
   int placeIndex;
 
-  PlacePage({Key key, @required this.placeIndex}) : super(key: key);
+  PlacePage({Key key, @required this.placeIndex, }) : super(key: key);
 
   @override
   _PlacePageState createState() => _PlacePageState();
 }
 
 class _PlacePageState extends State<PlacePage> {
+  static List<Place> allPlaces = Place.allPlaces();
+  static List<SavedPlace> allSavedPlaces = SavedPlace.allSavedPlaces();
 
-  ScrollController _scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  _scrollToTop() {
-    _scrollController.animateTo(_scrollController.position.minScrollExtent,
-        duration: Duration(milliseconds: 1000), curve: Curves.easeIn);
-
-  }
 
   Widget build(BuildContext context) {
+    final double cardHeight = MediaQuery
+        .of(context)
+        .size
+        .height / 1.6;
+    final double cardWidth = MediaQuery
+        .of(context)
+        .size
+        .width / 1.05;
 
-    final double cardHeight = MediaQuery.of(context).size.height / 1.6;
-    final double cardWidth = MediaQuery.of(context).size.width / 1.05;
+    final alreadySaved =
+    allSavedPlaces.contains(allPlaces[widget.placeIndex].placeName);
 
     return Scaffold(
       drawerEdgeDragWidth: 0,
       backgroundColor: Colors.indigo[50],
-
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.purple,
         elevation: 0,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.bookmark),
-          onPressed: (){
+            icon: Icon(
+              alreadySaved ? Icons.bookmark : Icons.bookmark_border,
+              color: alreadySaved ? Colors.white : null,
+            ),
+            onPressed: () {
+              setState(() {
+                allSavedPlaces.add(SavedPlace(
+                    placeName: allPlaces[widget.placeIndex].placeName));
 
-          }
-          ,)
+              });
+
+              print(allSavedPlaces[4].placeName);
+              print(allSavedPlaces.length);
+            },
+          )
         ],
-
       ),
-
-
       body: Stack(
         children: <Widget>[
           ListView(
-            controller: _scrollController,
             children: <Widget>[
               Stack(
                 children: <Widget>[
@@ -86,7 +124,8 @@ class _PlacePageState extends State<PlacePage> {
                       child: SafeArea(
                         top: false,
                         child: Image(
-                          image: AssetImage(GetRestaurantsList.image[widget.placeIndex]),
+                          image:
+                          AssetImage(allPlaces[widget.placeIndex].image),
                           height: MediaQuery
                               .of(context)
                               .size
@@ -98,11 +137,13 @@ class _PlacePageState extends State<PlacePage> {
                       ),
                     ),
                   ),
-
                   Center(
                     child: Padding(
                       padding: EdgeInsets.only(
-                        top: ((MediaQuery.of(context).size.height/3)/5)*4,
+                        top: ((MediaQuery
+                            .of(context)
+                            .size
+                            .height / 3) / 5) * 4,
                       ),
                       child: SizedBox(
                         width: cardWidth,
@@ -119,25 +160,44 @@ class _PlacePageState extends State<PlacePage> {
                               spacing: 10,
                               children: <Widget>[
                                 Container(
-                                    width: MediaQuery.of(context).size.width/1.18,
-                                    child: AutoSizeText(GetRestaurantsList.placeName[widget.placeIndex], style: TextStyle(fontSize: 20),)),
+                                    width: MediaQuery
+                                        .of(context)
+                                        .size
+                                        .width /
+                                        1.18,
+                                    child: AutoSizeText(
+                                      allPlaces[widget.placeIndex].placeName,
+                                      style: TextStyle(fontSize: 20),
+                                    )),
                                 Container(
-                                  width: MediaQuery.of(context).size.width/1.18,
+                                  width:
+                                  MediaQuery
+                                      .of(context)
+                                      .size
+                                      .width / 1.18,
                                   child: Row(
                                     children: <Widget>[
-                                    Icon(Icons.location_on, size: 18,),
-                                      AutoSizeText(GetRestaurantsList.location[widget.placeIndex], style: TextStyle(fontSize: 15),)
+                                      Icon(
+                                        Icons.location_on,
+                                        size: 18,
+                                      ),
+                                      AutoSizeText(
+                                        allPlaces[widget.placeIndex].location,
+                                        style: TextStyle(fontSize: 15),
+                                      )
                                     ],
                                   ),
                                 ),
                                 Container(
-                                  width: MediaQuery.of(context).size.width/1.18,
+                                  width:
+                                  MediaQuery
+                                      .of(context)
+                                      .size
+                                      .width / 1.18,
                                   child: AutoSizeText(
-                                    GetRestaurantsList.details[widget.placeIndex],
-                                      style: TextStyle(fontSize: 15)
-                                  ),
+                                      allPlaces[widget.placeIndex].details,
+                                      style: TextStyle(fontSize: 15)),
                                 ),
-
                               ],
                             ),
                           ),
@@ -145,16 +205,19 @@ class _PlacePageState extends State<PlacePage> {
                       ),
                     ),
                   ),
-
                   Align(
                     alignment: Alignment.topRight,
                     child: Padding(
-                      padding: const EdgeInsets.only(top:20.0),
+                      padding: const EdgeInsets.only(top: 20.0),
                       child: Visibility(
-                        visible: GetRestaurantsList.halal[widget.placeIndex],
+                        visible: allPlaces[widget.placeIndex].halal,
                         child: RawMaterialButton(
                           onPressed: () {},
-                          child: Text("HALAL", style: TextStyle(color: Colors.white, fontSize: 10.0),),
+                          child: Text(
+                            "HALAL",
+                            style:
+                            TextStyle(color: Colors.white, fontSize: 10.0),
+                          ),
                           shape: CircleBorder(),
                           elevation: 10.0,
                           fillColor: Colors.black,
@@ -163,16 +226,16 @@ class _PlacePageState extends State<PlacePage> {
                       ),
                     ),
                   ),
-
                 ],
               ),
-
             ],
           ),
-
         ],
       ),
-
     );
   }
 }
+
+final getPlace=PlacePage();
+
+

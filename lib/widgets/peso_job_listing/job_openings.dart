@@ -22,7 +22,7 @@ class JobOpenings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Restaurants"),
+        title: Text("Job Openings"),
         centerTitle: true,
         backgroundColor: Colors.purple,
       ),

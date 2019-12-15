@@ -89,7 +89,7 @@ class HomePageMenuCard extends StatelessWidget {
       children: <Widget>[
         Container(
           height: cardHeight / 1.5,
-          width: cardWidth / 5,
+          width: cardWidth / 4.5,
           child: FittedBox(
             fit: BoxFit.contain,
             child: MenuButton(
@@ -105,7 +105,7 @@ class HomePageMenuCard extends StatelessWidget {
         VerticalDivider(),
         Container(
           height: cardHeight / 1.5,
-          width: cardWidth / 5,
+          width: cardWidth / 4.5,
           child: FittedBox(
             fit: BoxFit.contain,
             child: MenuButton(
@@ -121,7 +121,7 @@ class HomePageMenuCard extends StatelessWidget {
         VerticalDivider(),
         Container(
           height: cardHeight / 1.5,
-          width: cardWidth / 5,
+          width: cardWidth / 4.5,
           child: FittedBox(
             fit: BoxFit.contain,
             child: MenuButton(
@@ -137,7 +137,7 @@ class HomePageMenuCard extends StatelessWidget {
         VerticalDivider(),
         Container(
           height: cardHeight / 1.5,
-          width: cardWidth / 5,
+          width: cardWidth / 4.5,
           child: FittedBox(
             fit: BoxFit.contain,
             child: MenuButton(

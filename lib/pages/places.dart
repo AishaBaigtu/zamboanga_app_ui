@@ -3,8 +3,13 @@ import 'package:zamboanga_app_ui/widgets/common/home.dart';
 import 'package:zamboanga_app_ui/widgets/common/drawer_visibility.dart';
 import 'package:zamboanga_app_ui/widgets/common/menu_card_change.dart';
 import 'package:zamboanga_app_ui/widgets/common/feed_card_change.dart';
+import 'package:zamboanga_app_ui/widgets/places/place_page.dart';
+
+
 
 class Places extends StatelessWidget {
+
+  static List<SavedPlace> allSavedPlaces = SavedPlace.allSavedPlaces();
   @override
   Widget build(BuildContext context) {
     return Home(
@@ -13,9 +18,7 @@ class Places extends StatelessWidget {
         showDrawer: DrawerVisibility(visibility: VisibilityFlag.gone,),
         menuCardType: ChangeMenuCard(change: ChangeMenuCardFlag.places),
         feedCardType: PlaceFeed(
-          placeName: ["Bay Tal Mal", "Teng's Grill"],
-          location: ["ZC","ZC"],
-          details: ["details","details"],
+          savedPlace: allSavedPlaces,
         ),
         bannerImage: "images/homepage_banner.png",
       );
