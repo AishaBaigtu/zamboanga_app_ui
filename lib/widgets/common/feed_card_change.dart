@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:zamboanga_app_ui/widgets/places/saved_places.dart';
 
 class ReportFeed extends StatelessWidget {
   ReportFeed({
@@ -248,7 +247,7 @@ class JobFeed extends StatelessWidget {
                           Wrap(
                             direction: Axis.horizontal,
                             children: <Widget>[
-                              Text(date[index]),
+                              Text("Applied on ${date[index]}"),
                               Text(" "),
                               Text(time[index]),
                             ],

@@ -5,6 +5,8 @@ class SavedJobs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text("Saved Jobs"),
+        centerTitle: true,
         backgroundColor: Colors.purple,
       ),
     );

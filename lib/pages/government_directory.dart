@@ -4,12 +4,6 @@ import 'package:zamboanga_app_ui/widgets/government_directory/office_page.dart';
 
 class GovernmentDirectory extends StatefulWidget {
 
-
-
-
-
-  static final buttoncolor = Colors.white;
-
   @override
   _GovernmentDirectoryState createState() => _GovernmentDirectoryState();
 }
@@ -17,13 +11,14 @@ class GovernmentDirectory extends StatefulWidget {
 class _GovernmentDirectoryState extends State<GovernmentDirectory> {
 
 
-  final List<String> officeName=["",""];
-  final List<String> address=["",""];
-  final List<String> contactNumber=["",""];
-  final List<String> officeSeal=["",""];
+  final List<String> officeName=["OFFICE NAME","OFFICE NAME"];
+  final List<String> officeAbout=["About","About"];
+  final List<String> address=["Address","Address"];
+  final List<String> contactNumber=["Contact Number","Contact Number"];
+  final List<String> officeSeal=["images/city_of_zamboanga_seal.png","images/city_of_zamboanga_seal.png"];
   final List<String> route=["",""];
-  final List<String> serviceName=[""];
-  final List<String> serviceAbout=[""];
+  final List<String> serviceName=["Service 1","Service 2"];
+  final List<String> serviceAbout=["About","About"];
 
   double radius = 10.0;
 
@@ -97,6 +92,7 @@ class _GovernmentDirectoryState extends State<GovernmentDirectory> {
                                   OfficePage(
                                     officeName: officeName,
                                     officeSeal: officeSeal,
+                                    officeAbout: officeAbout,
                                     contactNumber: contactNumber,
                                     address: address,
                                     serviceName: serviceName,

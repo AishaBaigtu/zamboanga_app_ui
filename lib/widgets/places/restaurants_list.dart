@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:zamboanga_app_ui/widgets/places/place_page.dart';
-import 'places.dart';
 
 class RestaurantsList extends StatefulWidget {
   @override

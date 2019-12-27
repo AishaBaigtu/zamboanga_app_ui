@@ -15,9 +15,9 @@ class PesoJobListing extends StatelessWidget {
         menuCardType: ChangeMenuCard(change: ChangeMenuCardFlag.peso_job_listing,),
         feedCardType: JobFeed(
           jobTitle: ["JOB 1", "JOB 2"],
-          companyName: ["DOLE", "DICT"],
+          companyName: ["Company Name", "Company Name"],
           date: ["12/22/19","12/22/19"],
-          time: ["5:15","1:01"],
+          time: ["5:15 PM","1:01 PM"],
           details: ["Job Details","Job Details"],
         ),
         bannerImage: "images/peso_job_banner.png",

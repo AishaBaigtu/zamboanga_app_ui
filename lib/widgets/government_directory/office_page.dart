@@ -3,12 +3,13 @@ import 'package:flutter/widgets.dart';
 
 class OfficePage extends StatefulWidget {
 
-  OfficePage({Key key,this.officeName, this.address, this.contactNumber, this.officeSeal, this.route,this.officeIndex, this.serviceName, this.serviceAbout}) : super(key: key);
+  OfficePage({Key key,this.officeName, this.address, this.contactNumber, this.officeSeal, this.route,this.officeIndex, this.serviceName, this.serviceAbout, this.officeAbout}) : super(key: key);
 
   final List<String> officeName;
   final List<String> address;
   final List<String> contactNumber;
   final List<String> officeSeal;
+  final List<String> officeAbout;
   final List<String> route;
   final List<String> serviceName;
   final List<String> serviceAbout;
@@ -43,10 +44,6 @@ class _OfficePageState extends State<OfficePage> {
 
 
   Widget build(BuildContext context) {
-    final double screensize = MediaQuery
-        .of(context)
-        .size
-        .height;
     final double cardHeight = MediaQuery
         .of(context)
         .size
@@ -120,6 +117,7 @@ class _OfficePageState extends State<OfficePage> {
                                             child: Column(
 
                                               children: <Widget>[
+                                                Text(widget.officeAbout[widget.officeIndex])
                                               ],
                                             ),
                                           ),

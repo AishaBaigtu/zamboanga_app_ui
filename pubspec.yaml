@@ -65,6 +65,8 @@ flutter:
     - images/city_of_zamboanga_seal.png
     - images/no_image.png
     - images/img.png
+    - images/image1.png
+    - images/image2.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

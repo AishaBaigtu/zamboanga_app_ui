@@ -17,12 +17,14 @@ class Place {
     var listOfPlaces = List<Place>();
 
     listOfPlaces.add(Place(
-        placeName: "dd", location: "aa", details: "aa", halal: true, image: "aa"));
+        placeName: "Restaurant Name", location: "Location", details: "Details", halal: false, image: "images/image1.png"));
     listOfPlaces.add(Place(
-        placeName: "aaa", location: "aa", details: "aa", halal: true, image: "aa"));
+        placeName: "Restaurant Name", location: "Location", details: "Details", halal: true, image: "images/image2.png"));
 
     return listOfPlaces;
+
   }
+
 
 
 }
@@ -33,31 +35,48 @@ class SavedPlace{
   bool halal;
   String image;
 
-  SavedPlace({this.placeName, this.location, this.details, this.halal, this.image});
+
+  SavedPlace({this.placeName, this.location, this.details, this.halal, this.image,});
 
   static List<SavedPlace> allSavedPlaces() {
     var listOfSavedPlaces = List<SavedPlace>();
+    int placeIndex;
+    PlacePage(
+      placeIndex: placeIndex,
+      addBookmark: (){
+      SavedPlace.allSavedPlaces().add(
+        SavedPlace(
+          placeName: Place.allPlaces()[placeIndex].placeName,
+          location: Place.allPlaces()[placeIndex].location,
+          details: Place.allPlaces()[placeIndex].details,
+          halal: Place.allPlaces()[placeIndex].halal,
+          image: Place.allPlaces()[placeIndex].image,
 
-
+        ),
+      );
+    },);
     return listOfSavedPlaces;
   }
-
 
 
 }
 
 class PlacePage extends StatefulWidget {
   int placeIndex;
+  final VoidCallback addBookmark;
 
-  PlacePage({Key key, @required this.placeIndex, }) : super(key: key);
+  PlacePage({Key key, @required this.placeIndex, this.addBookmark }) : super(key: key);
 
   @override
   _PlacePageState createState() => _PlacePageState();
 }
 
 class _PlacePageState extends State<PlacePage> {
-  static List<Place> allPlaces = Place.allPlaces();
-  static List<SavedPlace> allSavedPlaces = SavedPlace.allSavedPlaces();
+
+  VoidCallback addBookmark;
+
+  _PlacePageState({this.addBookmark, });
+
 
 
   Widget build(BuildContext context) {
@@ -71,7 +90,7 @@ class _PlacePageState extends State<PlacePage> {
         .width / 1.05;
 
     final alreadySaved =
-    allSavedPlaces.contains(allPlaces[widget.placeIndex].placeName);
+    SavedPlace.allSavedPlaces().contains(Place.allPlaces()[widget.placeIndex].placeName);
 
     return Scaffold(
       drawerEdgeDragWidth: 0,
@@ -87,14 +106,12 @@ class _PlacePageState extends State<PlacePage> {
               color: alreadySaved ? Colors.white : null,
             ),
             onPressed: () {
-              setState(() {
-                allSavedPlaces.add(SavedPlace(
-                    placeName: allPlaces[widget.placeIndex].placeName));
 
-              });
+                addBookmark();
 
-              print(allSavedPlaces[4].placeName);
-              print(allSavedPlaces.length);
+
+              print(SavedPlace.allSavedPlaces()[4].placeName);
+              print(SavedPlace.allSavedPlaces().length);
             },
           )
         ],
@@ -125,7 +142,7 @@ class _PlacePageState extends State<PlacePage> {
                         top: false,
                         child: Image(
                           image:
-                          AssetImage(allPlaces[widget.placeIndex].image),
+                          AssetImage(Place.allPlaces()[widget.placeIndex].image),
                           height: MediaQuery
                               .of(context)
                               .size
@@ -166,7 +183,7 @@ class _PlacePageState extends State<PlacePage> {
                                         .width /
                                         1.18,
                                     child: AutoSizeText(
-                                      allPlaces[widget.placeIndex].placeName,
+                                      Place.allPlaces()[widget.placeIndex].placeName,
                                       style: TextStyle(fontSize: 20),
                                     )),
                                 Container(
@@ -182,7 +199,7 @@ class _PlacePageState extends State<PlacePage> {
                                         size: 18,
                                       ),
                                       AutoSizeText(
-                                        allPlaces[widget.placeIndex].location,
+                                        Place.allPlaces()[widget.placeIndex].location,
                                         style: TextStyle(fontSize: 15),
                                       )
                                     ],
@@ -195,7 +212,7 @@ class _PlacePageState extends State<PlacePage> {
                                       .size
                                       .width / 1.18,
                                   child: AutoSizeText(
-                                      allPlaces[widget.placeIndex].details,
+                                      Place.allPlaces()[widget.placeIndex].details,
                                       style: TextStyle(fontSize: 15)),
                                 ),
                               ],
@@ -210,7 +227,7 @@ class _PlacePageState extends State<PlacePage> {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 20.0),
                       child: Visibility(
-                        visible: allPlaces[widget.placeIndex].halal,
+                        visible: Place.allPlaces()[widget.placeIndex].halal,
                         child: RawMaterialButton(
                           onPressed: () {},
                           child: Text(

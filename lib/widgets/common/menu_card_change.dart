@@ -303,7 +303,7 @@ class PlacesMenuCard extends StatelessWidget {
             fit: BoxFit.contain,
             child: MenuButton(
               title: "Restaurants",
-              icon: "images/custom_icons_images/job_openings.png",
+              icon: "images/custom_icons_images/places.png",
               toNextPage: MaterialPageRoute(
                 builder: (BuildContext context) =>
                     RestaurantsList(),
