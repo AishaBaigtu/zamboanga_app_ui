@@ -7,7 +7,6 @@ enum VisibilityFlag {
 }
 
 class DrawerVisibility extends StatelessWidget {
-
   final VisibilityFlag visibility;
 
   DrawerVisibility({
@@ -17,12 +16,23 @@ class DrawerVisibility extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (visibility == VisibilityFlag.visible) {
-      return IconButton(icon: Icon(CustomIcons.menu, color: Colors.white,),onPressed: (){Scaffold.of(context).openDrawer();},);
-
+      return IconButton(
+        icon: Icon(
+          CustomIcons.menu,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          Scaffold.of(context).openDrawer();
+        },
+      );
     } else {
       // If gone, we replace child with a custom widget (defaulting to a
       // [Container] with no defined size).
-      return IconButton(icon: Icon(Icons.arrow_back), onPressed: (){Navigator.of(context).pop();});
+      return IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+          });
     }
   }
 }

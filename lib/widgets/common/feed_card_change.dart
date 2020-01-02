@@ -2,7 +2,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
+import 'package:zamboanga_app_ui/models/saved_places.dart';
+import 'package:zamboanga_app_ui/widgets/places/place_page.dart';
 
+// ignore: must_be_immutable
 class ReportFeed extends StatelessWidget {
   ReportFeed({
     this.image,
@@ -92,6 +96,7 @@ class ReportFeed extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class NewsFeed extends StatelessWidget {
   NewsFeed({
     this.profilepic,
@@ -187,20 +192,13 @@ class NewsFeed extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class JobFeed extends StatelessWidget {
-  JobFeed({
-    this.jobTitle,
-    this.companyName,
-    this.date,
-    this.time,
-    this.details,
-  });
-
-  List<String> jobTitle;
-  List<String> companyName;
-  List<String> date;
-  List<String> time;
-  List<String> details;
+  List<String> jobTitle = ["JOB 1", "JOB 2"];
+  List<String> companyName = ["Company Name", "Company Name"];
+  List<String> date = ["12/22/19", "12/22/19"];
+  List<String> time = ["5:15 PM", "1:01 PM"];
+  List<String> details = ["Job Details", "Job Details"];
 
   @override
   Widget build(BuildContext context) {
@@ -283,24 +281,22 @@ class JobFeed extends StatelessWidget {
 }
 
 class PlaceFeed extends StatefulWidget {
-  List savedPlace;
-
-  PlaceFeed({Key key, this.savedPlace}) : super(key: key);
   @override
   _PlaceFeedState createState() => _PlaceFeedState();
 }
 
 class _PlaceFeedState extends State<PlaceFeed> {
-
   @override
   Widget build(BuildContext context) {
-    if (widget.savedPlace.length == 0) {
+    final SavedPlace savedPlace = Provider.of<SavedPlace>(context);
+
+    if (savedPlace.placeName.length == 0) {
       return Container();
     } else {
       return ListView.builder(
         shrinkWrap: true,
         physics: ScrollPhysics(),
-        itemCount: widget.savedPlace.length,
+        itemCount: savedPlace.placeName.length,
         itemBuilder: (BuildContext context, index) {
           return Card(
             elevation: 0,
@@ -321,8 +317,7 @@ class _PlaceFeedState extends State<PlaceFeed> {
                           Container(
                               width: MediaQuery.of(context).size.width / 1.3,
                               child: AutoSizeText(
-                                widget.savedPlace[index].placeName
-                                    .toUpperCase(),
+                                savedPlace.placeName[index].toUpperCase(),
                                 style: TextStyle(
                                   fontSize: 20.0,
                                 ),
@@ -335,7 +330,7 @@ class _PlaceFeedState extends State<PlaceFeed> {
                                 size: 15,
                               ),
                               Text(" "),
-                              Text(widget.savedPlace[index].location),
+                              Text(savedPlace.location[index]),
                             ],
                           ),
                         ],
@@ -345,7 +340,7 @@ class _PlaceFeedState extends State<PlaceFeed> {
                   Container(
                     width: MediaQuery.of(context).size.width / 1.18,
                     child: AutoSizeText(
-                      widget.savedPlace[index].details,
+                      savedPlace.location[index],
                       maxLines: 4,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontSize: 15.0),
@@ -356,7 +351,14 @@ class _PlaceFeedState extends State<PlaceFeed> {
                         left: MediaQuery.of(context).size.width - 80),
                     child: IconButton(
                         icon: Icon(Icons.arrow_forward_ios, size: 18),
-                        onPressed: () {}),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  PlacePage(placeIndex: savedPlace.index[index]),
+                            ),
+                          );
+                        }),
                   )
                 ],
               ),

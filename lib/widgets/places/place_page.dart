@@ -1,96 +1,30 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:zamboanga_app_ui/models/place.dart';
+import 'package:zamboanga_app_ui/models/saved_places.dart';
 
-
-
-class Place {
-  String placeName;
-  String location;
-  String details;
-  bool halal;
-  String image;
-
-  Place({this.placeName, this.location, this.details, this.halal, this.image});
-
-  static List<Place> allPlaces() {
-    var listOfPlaces = List<Place>();
-
-    listOfPlaces.add(Place(
-        placeName: "Restaurant Name", location: "Location", details: "Details", halal: false, image: "images/image1.png"));
-    listOfPlaces.add(Place(
-        placeName: "Restaurant Name", location: "Location", details: "Details", halal: true, image: "images/image2.png"));
-
-    return listOfPlaces;
-
-  }
-
-
-
-}
-class SavedPlace{
-  String placeName;
-  String location;
-  String details;
-  bool halal;
-  String image;
-
-
-  SavedPlace({this.placeName, this.location, this.details, this.halal, this.image,});
-
-  static List<SavedPlace> allSavedPlaces() {
-    var listOfSavedPlaces = List<SavedPlace>();
-    int placeIndex;
-    PlacePage(
-      placeIndex: placeIndex,
-      addBookmark: (){
-      SavedPlace.allSavedPlaces().add(
-        SavedPlace(
-          placeName: Place.allPlaces()[placeIndex].placeName,
-          location: Place.allPlaces()[placeIndex].location,
-          details: Place.allPlaces()[placeIndex].details,
-          halal: Place.allPlaces()[placeIndex].halal,
-          image: Place.allPlaces()[placeIndex].image,
-
-        ),
-      );
-    },);
-    return listOfSavedPlaces;
-  }
-
-
-}
-
+// ignore: must_be_immutable
 class PlacePage extends StatefulWidget {
   int placeIndex;
-  final VoidCallback addBookmark;
 
-  PlacePage({Key key, @required this.placeIndex, this.addBookmark }) : super(key: key);
+  PlacePage({
+    Key key,
+    @required this.placeIndex,
+  }) : super(key: key);
 
   @override
   _PlacePageState createState() => _PlacePageState();
 }
 
 class _PlacePageState extends State<PlacePage> {
-
-  VoidCallback addBookmark;
-
-  _PlacePageState({this.addBookmark, });
-
-
-
   Widget build(BuildContext context) {
-    final double cardHeight = MediaQuery
-        .of(context)
-        .size
-        .height / 1.6;
-    final double cardWidth = MediaQuery
-        .of(context)
-        .size
-        .width / 1.05;
+    final double cardHeight = MediaQuery.of(context).size.height / 1.6;
+    final double cardWidth = MediaQuery.of(context).size.width / 1.05;
 
-    final alreadySaved =
-    SavedPlace.allSavedPlaces().contains(Place.allPlaces()[widget.placeIndex].placeName);
+    final SavedPlace savedPlace = Provider.of<SavedPlace>(context);
+    final Place places = Provider.of<Place>(context);
 
     return Scaffold(
       drawerEdgeDragWidth: 0,
@@ -102,16 +36,26 @@ class _PlacePageState extends State<PlacePage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(
-              alreadySaved ? Icons.bookmark : Icons.bookmark_border,
-              color: alreadySaved ? Colors.white : null,
+              savedPlace.placeName.contains(places.placeName[widget.placeIndex])
+                  ? Icons.bookmark
+                  : Icons.bookmark_border,
+              color: savedPlace.placeName
+                      .contains(places.placeName[widget.placeIndex])
+                  ? Colors.white
+                  : null,
             ),
             onPressed: () {
-
-                addBookmark();
-
-
-              print(SavedPlace.allSavedPlaces()[4].placeName);
-              print(SavedPlace.allSavedPlaces().length);
+              savedPlace.newPlaceName = places.placeName[widget.placeIndex];
+              savedPlace.newLocation = places.location[widget.placeIndex];
+              savedPlace.newDetails = places.details[widget.placeIndex];
+              savedPlace.newHalal = places.halal[widget.placeIndex];
+              savedPlace.newIndex = widget.placeIndex;
+              if (savedPlace.placeName
+                  .contains(places.placeName[widget.placeIndex])) {
+                savedPlace.remove();
+              } else {
+                savedPlace.add();
+              }
             },
           )
         ],
@@ -141,12 +85,8 @@ class _PlacePageState extends State<PlacePage> {
                       child: SafeArea(
                         top: false,
                         child: Image(
-                          image:
-                          AssetImage(Place.allPlaces()[widget.placeIndex].image),
-                          height: MediaQuery
-                              .of(context)
-                              .size
-                              .height / 3,
+                          image: AssetImage(places.image[widget.placeIndex]),
+                          height: MediaQuery.of(context).size.height / 3,
                           width: double.infinity,
                           fit: BoxFit.cover,
                           alignment: Alignment.bottomRight,
@@ -157,10 +97,7 @@ class _PlacePageState extends State<PlacePage> {
                   Center(
                     child: Padding(
                       padding: EdgeInsets.only(
-                        top: ((MediaQuery
-                            .of(context)
-                            .size
-                            .height / 3) / 5) * 4,
+                        top: ((MediaQuery.of(context).size.height / 3) / 5) * 4,
                       ),
                       child: SizedBox(
                         width: cardWidth,
@@ -177,21 +114,15 @@ class _PlacePageState extends State<PlacePage> {
                               spacing: 10,
                               children: <Widget>[
                                 Container(
-                                    width: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .width /
+                                    width: MediaQuery.of(context).size.width /
                                         1.18,
                                     child: AutoSizeText(
-                                      Place.allPlaces()[widget.placeIndex].placeName,
-                                      style: TextStyle(fontSize: 20),
+                                      places.placeName[widget.placeIndex].toUpperCase(),
+                                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                                     )),
                                 Container(
                                   width:
-                                  MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width / 1.18,
+                                      MediaQuery.of(context).size.width / 1.18,
                                   child: Row(
                                     children: <Widget>[
                                       Icon(
@@ -199,7 +130,7 @@ class _PlacePageState extends State<PlacePage> {
                                         size: 18,
                                       ),
                                       AutoSizeText(
-                                        Place.allPlaces()[widget.placeIndex].location,
+                                        places.location[widget.placeIndex],
                                         style: TextStyle(fontSize: 15),
                                       )
                                     ],
@@ -207,12 +138,9 @@ class _PlacePageState extends State<PlacePage> {
                                 ),
                                 Container(
                                   width:
-                                  MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width / 1.18,
+                                      MediaQuery.of(context).size.width / 1.18,
                                   child: AutoSizeText(
-                                      Place.allPlaces()[widget.placeIndex].details,
+                                      places.details[widget.placeIndex],
                                       style: TextStyle(fontSize: 15)),
                                 ),
                               ],
@@ -227,13 +155,13 @@ class _PlacePageState extends State<PlacePage> {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 20.0),
                       child: Visibility(
-                        visible: Place.allPlaces()[widget.placeIndex].halal,
+                        visible: places.halal[widget.placeIndex],
                         child: RawMaterialButton(
                           onPressed: () {},
                           child: Text(
                             "HALAL",
                             style:
-                            TextStyle(color: Colors.white, fontSize: 10.0),
+                                TextStyle(color: Colors.white, fontSize: 10.0),
                           ),
                           shape: CircleBorder(),
                           elevation: 10.0,
@@ -252,7 +180,3 @@ class _PlacePageState extends State<PlacePage> {
     );
   }
 }
-
-final getPlace=PlacePage();
-
-

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:zamboanga_app_ui/models/place.dart';
 import 'package:zamboanga_app_ui/widgets/places/place_page.dart';
+import 'package:provider/provider.dart';
 
 class RestaurantsList extends StatefulWidget {
   @override
@@ -7,10 +9,10 @@ class RestaurantsList extends StatefulWidget {
 }
 
 class _RestaurantsListState extends State<RestaurantsList> {
-  final List<Place> _allPlaces = Place.allPlaces();
-
   @override
   Widget build(BuildContext context) {
+    final Place places = Provider.of<Place>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Restaurants"),
@@ -20,7 +22,7 @@ class _RestaurantsListState extends State<RestaurantsList> {
       body: ListView.builder(
           shrinkWrap: true,
           physics: ScrollPhysics(),
-          itemCount: _allPlaces.length,
+          itemCount: places.placeName.length,
           itemBuilder: (BuildContext context, index) {
             return Padding(
               padding:
@@ -45,7 +47,7 @@ class _RestaurantsListState extends State<RestaurantsList> {
                               heightFactor: 0.8,
                               widthFactor: 1,
                               child: Image(
-                                  image: AssetImage(_allPlaces[index].image),
+                                  image: AssetImage(places.image[index]),
                                   width: MediaQuery.of(context).size.width,
                                   height:
                                       MediaQuery.of(context).size.height / 3.5,
@@ -56,7 +58,7 @@ class _RestaurantsListState extends State<RestaurantsList> {
                             padding: const EdgeInsets.only(
                                 left: 10.0, top: 10.0, right: 10.0),
                             child: Text(
-                              _allPlaces[index].placeName,
+                              places.placeName[index],
                               style: Theme.of(context).textTheme.title,
                             ),
                           ),
@@ -68,8 +70,7 @@ class _RestaurantsListState extends State<RestaurantsList> {
                                   Icons.location_on,
                                   size: 18.0,
                                 ),
-                                Expanded(
-                                    child: Text(_allPlaces[index].location)),
+                                Expanded(child: Text(places.location[index])),
                                 IconButton(
                                   icon: Icon(
                                     Icons.arrow_forward_ios,
@@ -95,7 +96,7 @@ class _RestaurantsListState extends State<RestaurantsList> {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 20.0),
                         child: Visibility(
-                          visible: _allPlaces[index].halal,
+                          visible: places.halal[index],
                           child: RawMaterialButton(
                             onPressed: () {},
                             child: Text(

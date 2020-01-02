@@ -15,71 +15,59 @@ enum ChangeMenuCardFlag {
   citizen_report,
   peso_job_listing,
   places,
-
 }
 
 class ChangeMenuCard extends StatelessWidget {
-
-
   ChangeMenuCard({
     @required this.change,
   });
 
   final ChangeMenuCardFlag change;
 
-
   @override
   Widget build(BuildContext context) {
-
     final double cardHeight = MediaQuery.of(context).size.height / 5;
     final double cardWidth = MediaQuery.of(context).size.width / 1.05;
 
-
-    _changeMenu(){
-      if (change == ChangeMenuCardFlag.home_page){
+    _changeMenu() {
+      if (change == ChangeMenuCardFlag.home_page) {
         return HomePageMenuCard();
-      }
-      else if (change == ChangeMenuCardFlag.citizen_report){
+      } else if (change == ChangeMenuCardFlag.citizen_report) {
         return CitizenReportMenuCard();
-      }
-      else if (change == ChangeMenuCardFlag.peso_job_listing){
+      } else if (change == ChangeMenuCardFlag.peso_job_listing) {
         return PJLMenuCard();
-      }
-      else {
+      } else {
         return PlacesMenuCard();
       }
     }
 
-      return Center(
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: ((MediaQuery.of(context).size.height/3)/5)*4,
-          ),
-          child: SizedBox(
-            width: cardWidth,
-            height: cardHeight,
-            child: Card(
-              elevation: 1.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-                child: _changeMenu(),
-              ),
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: ((MediaQuery.of(context).size.height / 3) / 5) * 4,
+        ),
+        child: SizedBox(
+          width: cardWidth,
+          height: cardHeight,
+          child: Card(
+            elevation: 1.0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+              child: _changeMenu(),
             ),
           ),
         ),
-      );
-
+      ),
+    );
   }
 }
 
 class HomePageMenuCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
-    final double screensize = MediaQuery.of(context).size.height;
     final double cardHeight = MediaQuery.of(context).size.height / 5;
     final double cardWidth = MediaQuery.of(context).size.width / 1.1;
 
@@ -96,8 +84,7 @@ class HomePageMenuCard extends StatelessWidget {
               title: "Citizen Report",
               icon: "images/custom_icons_images/citizen_report.png",
               toNextPage: MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    CitizenReport(),
+                builder: (BuildContext context) => CitizenReport(),
               ),
             ),
           ),
@@ -112,8 +99,7 @@ class HomePageMenuCard extends StatelessWidget {
               title: "Government Directory",
               icon: "images/custom_icons_images/government_directory.png",
               toNextPage: MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    GovernmentDirectory(),
+                builder: (BuildContext context) => GovernmentDirectory(),
               ),
             ),
           ),
@@ -128,8 +114,7 @@ class HomePageMenuCard extends StatelessWidget {
               title: "PESO Job Listing",
               icon: "images/custom_icons_images/peso_job_listing.png",
               toNextPage: MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    PesoJobListing(),
+                builder: (BuildContext context) => PesoJobListing(),
               ),
             ),
           ),
@@ -144,8 +129,7 @@ class HomePageMenuCard extends StatelessWidget {
               title: "Places",
               icon: "images/custom_icons_images/places.png",
               toNextPage: MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    Places(),
+                builder: (BuildContext context) => Places(),
               ),
             ),
           ),
@@ -156,20 +140,18 @@ class HomePageMenuCard extends StatelessWidget {
 }
 
 class CitizenReportMenuCard extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
-    final double cardHeight=MediaQuery.of(context).size.height/5;
-    final double cardWidth=MediaQuery.of(context).size.width/1.1;
+    final double cardHeight = MediaQuery.of(context).size.height / 5;
+    final double cardWidth = MediaQuery.of(context).size.width / 1.1;
 
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
-          height: cardHeight/1.5,
-          width: cardWidth/5,
+          height: cardHeight / 1.5,
+          width: cardWidth / 5,
           child: FittedBox(
             fit: BoxFit.contain,
             child: MenuButton(
@@ -177,16 +159,15 @@ class CitizenReportMenuCard extends StatelessWidget {
               icon: "images/custom_icons_images/crime.png",
               toNextPage: MaterialPageRoute(
                 builder: (BuildContext context) =>
-                    ReportPage(appBarTitle:"Crime"),
+                    ReportPage(appBarTitle: "Crime"),
               ),
-
             ),
           ),
         ),
         VerticalDivider(),
         Container(
-          height: cardHeight/1.5,
-          width: cardWidth/5,
+          height: cardHeight / 1.5,
+          width: cardWidth / 5,
           child: FittedBox(
             fit: BoxFit.contain,
             child: MenuButton(
@@ -196,14 +177,13 @@ class CitizenReportMenuCard extends StatelessWidget {
                 builder: (BuildContext context) =>
                     ReportPage(appBarTitle: "Fire"),
               ),
-
             ),
           ),
         ),
         VerticalDivider(),
         Container(
-          height: cardHeight/1.5,
-          width: cardWidth/5,
+          height: cardHeight / 1.5,
+          width: cardWidth / 5,
           child: FittedBox(
             fit: BoxFit.contain,
             child: MenuButton(
@@ -218,8 +198,8 @@ class CitizenReportMenuCard extends StatelessWidget {
         ),
         VerticalDivider(),
         Container(
-          height: cardHeight/1.5,
-          width: cardWidth/5,
+          height: cardHeight / 1.5,
+          width: cardWidth / 5,
           child: FittedBox(
             fit: BoxFit.contain,
             child: MenuButton(
@@ -240,42 +220,38 @@ class CitizenReportMenuCard extends StatelessWidget {
 class PJLMenuCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
-    final double screensize=MediaQuery.of(context).size.height;
-    final double cardHeight=MediaQuery.of(context).size.height/5;
-    final double cardWidth=MediaQuery.of(context).size.width/1.1;
+    final double cardHeight = MediaQuery.of(context).size.height / 5;
+    final double cardWidth = MediaQuery.of(context).size.width / 1.1;
 
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
-          height: cardHeight/1.5,
-          width: cardWidth/2.2,
+          height: cardHeight / 1.5,
+          width: cardWidth / 2.2,
           child: FittedBox(
             fit: BoxFit.contain,
             child: MenuButton(
               title: "Job Openings",
               icon: "images/custom_icons_images/job_openings.png",
               toNextPage: MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    JobOpenings(),
+                builder: (BuildContext context) => JobOpenings(),
               ),
             ),
           ),
         ),
         VerticalDivider(),
         Container(
-          height: cardHeight/1.5,
-          width: cardWidth/2.2,
+          height: cardHeight / 1.5,
+          width: cardWidth / 2.2,
           child: FittedBox(
             fit: BoxFit.contain,
             child: MenuButton(
               title: "Saved Jobs",
               icon: "images/custom_icons_images/saved_jobs.png",
               toNextPage: MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    SavedJobs(),
+                builder: (BuildContext context) => SavedJobsList(),
               ),
             ),
           ),
@@ -288,8 +264,7 @@ class PJLMenuCard extends StatelessWidget {
 class PlacesMenuCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final double screensize = MediaQuery.of(context).size.height;
-    final double cardHeight = MediaQuery.of(context).size.height/ 5;
+    final double cardHeight = MediaQuery.of(context).size.height / 5;
     final double cardWidth = MediaQuery.of(context).size.width / 1.1;
 
     return Row(
@@ -305,8 +280,7 @@ class PlacesMenuCard extends StatelessWidget {
               title: "Restaurants",
               icon: "images/custom_icons_images/places.png",
               toNextPage: MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    RestaurantsList(),
+                builder: (BuildContext context) => RestaurantsList(),
               ),
             ),
           ),
@@ -321,8 +295,7 @@ class PlacesMenuCard extends StatelessWidget {
               title: "Activity Centers",
               icon: "images/custom_icons_images/saved_jobs.png",
               toNextPage: MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    ActivityCentersList(),
+                builder: (BuildContext context) => ActivityCentersList(),
               ),
             ),
           ),
@@ -331,4 +304,3 @@ class PlacesMenuCard extends StatelessWidget {
     );
   }
 }
-

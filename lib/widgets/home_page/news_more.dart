@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class NewsMore extends StatelessWidget {
-
   final int newsIndex;
 
   NewsMore({Key key, @required this.newsIndex}) : super(key: key);
@@ -12,7 +11,6 @@ class NewsMore extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.purple,
       ),
-
     );
   }
 }

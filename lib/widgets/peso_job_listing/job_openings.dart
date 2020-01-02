@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zamboanga_app_ui/widgets/peso_job_listing/job_page.dart';
+import 'package:zamboanga_app_ui/models/jobs.dart';
+import 'package:provider/provider.dart';
 
 class JobOpenings extends StatefulWidget {
   @override
@@ -7,30 +9,13 @@ class JobOpenings extends StatefulWidget {
 }
 
 class _JobOpeningsState extends State<JobOpenings> {
-  List<String> jobTitle = ["JOB 1", "JOB 2"];
-
-  List<String> company = ["Company Name", "Company Name"];
-
-  List<String> address = ["Canelar, Zamboanga City", ""];
-
-  List<String> details = [
-    "dkkkkkkkkkkkkkkkkkkkkkkkkkkkkllllllllllllllllllllllllllllllllllllllllllllllsssssssssssssssssaaaaaa",
-    ""
-  ];
-
-  List<String> website = [
-    "images/homepage_banner.png",
-    "images/peso_job_banner.png"
-  ];
-
-  List<String> email = ["wwww", ""];
-
   double radius = 10.0;
 
   double spacing = 10.0;
 
   @override
   Widget build(BuildContext context) {
+    final Jobs jobs = Provider.of<Jobs>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Job Openings"),
@@ -43,7 +28,7 @@ class _JobOpeningsState extends State<JobOpenings> {
           child: ListView.builder(
             shrinkWrap: true,
             physics: ScrollPhysics(),
-            itemCount: jobTitle.length,
+            itemCount: jobs.jobTitle.length,
             itemBuilder: (BuildContext context, index) {
               return Padding(
                 padding: EdgeInsets.only(
@@ -62,7 +47,7 @@ class _JobOpeningsState extends State<JobOpenings> {
                       children: <Widget>[
                         ListTile(
                           title: Text(
-                            jobTitle[index].toUpperCase(),
+                            jobs.jobTitle[index].toUpperCase(),
                             style: TextStyle(fontSize: 20.0),
                           ),
                           subtitle: Column(
@@ -78,7 +63,7 @@ class _JobOpeningsState extends State<JobOpenings> {
                                   ),
                                   Text(" "),
                                   Text(
-                                    company[index],
+                                    jobs.companyName[index],
                                     style: TextStyle(fontSize: 15.0),
                                   ),
                                 ],
@@ -106,5 +91,3 @@ class _JobOpeningsState extends State<JobOpenings> {
     );
   }
 }
-
-final GetJobOpenings = JobOpenings();

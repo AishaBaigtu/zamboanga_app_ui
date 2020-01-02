@@ -2,8 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class OfficePage extends StatefulWidget {
-
-  OfficePage({Key key,this.officeName, this.address, this.contactNumber, this.officeSeal, this.route,this.officeIndex, this.serviceName, this.serviceAbout, this.officeAbout}) : super(key: key);
+  OfficePage(
+      {Key key,
+      this.officeName,
+      this.address,
+      this.contactNumber,
+      this.officeSeal,
+      this.route,
+      this.officeIndex,
+      this.serviceName,
+      this.serviceAbout,
+      this.officeAbout})
+      : super(key: key);
 
   final List<String> officeName;
   final List<String> address;
@@ -20,10 +30,7 @@ class OfficePage extends StatefulWidget {
 }
 
 class _OfficePageState extends State<OfficePage> {
-
-
   ScrollController _scrollController = ScrollController();
-
 
   @override
   void initState() {
@@ -42,27 +49,18 @@ class _OfficePageState extends State<OfficePage> {
         duration: Duration(milliseconds: 1000), curve: Curves.easeIn);
   }
 
-
   Widget build(BuildContext context) {
-    final double cardHeight = MediaQuery
-        .of(context)
-        .size
-        .height / 4;
-    final double cardWidth = MediaQuery
-        .of(context)
-        .size
-        .width / 1.1;
+    final double cardHeight = MediaQuery.of(context).size.height / 4;
+    final double cardWidth = MediaQuery.of(context).size.width / 1.1;
 
     return Scaffold(
       drawerEdgeDragWidth: 0,
       backgroundColor: Colors.indigo[50],
-
       appBar: AppBar(
         title: Text("${widget.officeName[widget.officeIndex]}"),
         centerTitle: true,
         backgroundColor: Colors.purple,
       ),
-
       body: Stack(
         children: <Widget>[
           ListView(
@@ -77,15 +75,13 @@ class _OfficePageState extends State<OfficePage> {
                             gradient: LinearGradient(
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
-                                colors: [Colors.blueAccent, Colors.purple]
-                            )
-                        ),
+                                colors: [Colors.blueAccent, Colors.purple])),
                         child: Center(
-                            child: Image(height: 220, image: AssetImage(widget
-                                .officeSeal[widget.officeIndex])))),
+                            child: Image(
+                                height: 220,
+                                image: AssetImage(
+                                    widget.officeSeal[widget.officeIndex])))),
                   ),
-
-
                   Padding(
                     padding: const EdgeInsets.only(top: 120.0),
                     child: Center(
@@ -110,21 +106,18 @@ class _OfficePageState extends State<OfficePage> {
                                   Divider(),
                                   Expanded(
                                     child: Container(
-
                                         child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: SingleChildScrollView(
-                                            child: Column(
-
-                                              children: <Widget>[
-                                                Text(widget.officeAbout[widget.officeIndex])
-                                              ],
-                                            ),
-                                          ),
-                                        )
-                                    ),
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          children: <Widget>[
+                                            Text(widget.officeAbout[
+                                                widget.officeIndex])
+                                          ],
+                                        ),
+                                      ),
+                                    )),
                                   ),
-
                                 ],
                               ),
                             ),
@@ -133,17 +126,15 @@ class _OfficePageState extends State<OfficePage> {
                       ),
                     ),
                   ),
-
                 ],
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 15.0, bottom: 20.0),
                 child: Text(
                   "SERVICES",
-                  textAlign: TextAlign.center, style: Theme
-                    .of(context)
-                    .textTheme
-                    .button,),
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.button,
+                ),
               ),
               ListView.builder(
                 shrinkWrap: true,
@@ -154,19 +145,17 @@ class _OfficePageState extends State<OfficePage> {
                     shape: new RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0),
                     ),
-
                     child: ExpansionTile(
                       title: Text(
                         widget.serviceName[index],
-                        style: TextStyle(color: Colors.black),),
+                        style: TextStyle(color: Colors.black),
+                      ),
                       children: <Widget>[
                         Divider(),
-
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(widget.serviceAbout[index]),
                         ),
-
                       ],
                     ),
                   );
@@ -174,11 +163,8 @@ class _OfficePageState extends State<OfficePage> {
               ),
             ],
           ),
-
         ],
       ),
-
-
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.purple,
         child: Icon(Icons.arrow_upward),
@@ -189,4 +175,3 @@ class _OfficePageState extends State<OfficePage> {
     );
   }
 }
-
